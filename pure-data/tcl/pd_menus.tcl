@@ -224,6 +224,7 @@ proc ::pd_menus::build_put_menu {mymenu} {
     $mymenu add command -label [_ "Comment"] -accelerator "$accelerator+5" \
         -command {menu_send_float $::focused_window text 0}
     $mymenu add  separator
+
     $mymenu add command -label [_ "Radium Float"] \
         -command {menu_send_float $::focused_window obj "-16000 -16000 r_float <set name here>"}
     $mymenu add command -label [_ "Radium Integer"] \
@@ -231,6 +232,7 @@ proc ::pd_menus::build_put_menu {mymenu} {
     $mymenu add command -label [_ "Radium Toggle"] \
         -command {menu_send_float $::focused_window obj "-16000 -16000 r_bool <set name here>"}
     $mymenu add  separator
+
     $mymenu add command -label [_ "Bang"]    -accelerator "Shift+$accelerator+B" \
         -command {menu_send $::focused_window bng}
     $mymenu add command -label [_ "Toggle"]  -accelerator "Shift+$accelerator+T" \
@@ -250,8 +252,49 @@ proc ::pd_menus::build_put_menu {mymenu} {
     $mymenu add command -label [_ "Canvas"]  -accelerator "Shift+$accelerator+C" \
         -command {menu_send $::focused_window mycnv}
     $mymenu add  separator
+
     $mymenu add command -label [_ "Graph"] -command {menu_send $::focused_window graph}
     $mymenu add command -label [_ "Array"] -command {menu_send $::focused_window menuarray}
+    $mymenu add  separator
+
+    $mymenu add command -label [_ "Radium Note On"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_note_on"}
+    $mymenu add command -label [_ "Radium Note Off"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_note_off"}
+    $mymenu add command -label [_ "Radium Notes"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_notes"}
+    $mymenu add command -label [_ "Radium Note Pitch"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_pitch"}
+    $mymenu add command -label [_ "Radium Note Velocity"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_velocity"}
+    $mymenu add command -label [_ "Radium Send Note On"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_send_note_on"}
+    $mymenu add  separator
+
+    $mymenu add command -label [_ "Radium Send Note Off"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_send_note_off"}
+    $mymenu add command -label [_ "Radium Send Note Pitch"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_send_pitch"}
+    $mymenu add command -label [_ "Radium Send Note Velocity"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_send_velocity"}
+    $mymenu add  separator
+
+    $mymenu add command -label [_ "Radium Pipe Note On"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_pipe_note_ons"}
+    $mymenu add command -label [_ "Radium Pipe Note Off"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_pipe_note_offs"}
+    $mymenu add command -label [_ "Radium Pipe Note Velocity"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_pipe_velocity"}
+    $mymenu add command -label [_ "Radium Pipe Note Pitch"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_pipe_pitch"}
+    $mymenu add  separator
+
+    $mymenu add command -label [_ "Radium Line"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_line"}
+    $mymenu add command -label [_ "Radium Subline"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_subline"}
+    $mymenu add command -label [_ "Radium Set Block Reltempo"] \
+        -command {menu_send_float $::focused_window obj "-16000 -16000 r_send_blockreltempo"}
 }
 
 proc ::pd_menus::build_find_menu {mymenu} {
