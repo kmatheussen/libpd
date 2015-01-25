@@ -887,6 +887,54 @@ static void set_signal_handlers(void)
 #endif /* NOT _WIN32 && NOT __CYGWIN__ && NOT LIBPD */
 }
 
+#ifndef _WIN32
+#ifndef __APPLE__
+static int has_executable_in_path(const char *executable_name){
+  char *path = strdup(getenv("PATH")); // strok is modifying the input.
+  char *dir;
+  
+  for ( dir = strtok( path, ":" ); dir!=NULL; dir = strtok( NULL, ":" ) ) {
+    char temp[1024];
+    snprintf(temp,1020,"%s/%s",dir,executable_name);
+    if (access(temp, F_OK|X_OK)==0) {
+      free(path);
+      return 1;
+    }
+  }
+
+  free(path);
+  return 0;
+}
+
+static const char *find_wish_executable_name(void){
+  if (has_executable_in_path("wish8.5"))
+    return "wish8.5";
+  if (has_executable_in_path("wish8.6"))
+    return "wish8.6";
+  if (has_executable_in_path("wish"))
+    return "wish";
+  if (has_executable_in_path("wish8.7"))
+    return "wish8.7";
+  if (has_executable_in_path("wish8.8"))
+    return "wish8.8";
+  if (has_executable_in_path("wish8.9"))
+    return "wish8.9";
+  if (has_executable_in_path("wish8.10"))
+    return "wish8.10";
+  if (has_executable_in_path("wish8.11"))
+    return "wish8.11";
+  if (has_executable_in_path("wish8.12"))
+    return "wish8.12";
+  if (has_executable_in_path("wish8"))
+    return "wish8";
+
+  fprintf(stderr,"ERROR: wish not found in path\n");
+  return "wish";
+}
+
+#endif // __APPLE__
+#endif // _WIN32
+
 int sys_startgui(const char *libdir)
 {
     char cmdbuf[4*MAXPDSTRING];
@@ -1081,8 +1129,10 @@ int sys_startgui(const char *libdir)
 #else /* __APPLE__ */
             sprintf(cmdbuf,
   "TCL_LIBRARY=\"%s/lib/tcl/library\" TK_LIBRARY=\"%s/lib/tk/library\" \
-  wish8.5 \"%s/" PDGUIDIR "/pd-gui.tcl\" %d\n",
-                 libdir, libdir, libdir, portno);
+  %s \"%s/" PDGUIDIR "/pd-gui.tcl\" %d\n",
+                    libdir, libdir,
+                    find_wish_executable_name(),
+                    libdir, portno);
 #endif /* __APPLE__ */
             sys_guicmd = cmdbuf;
         }
